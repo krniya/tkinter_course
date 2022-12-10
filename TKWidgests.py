@@ -1,4 +1,5 @@
 
+from cgi import test
 from tabnanny import check
 import tkinter as tk
 from tkinter import ttk
@@ -36,7 +37,7 @@ text.insert("1.0", "Please enter a comment...")
 text["state"] = "normal" # "disabled"
 text_content = text.get("1.0", "end" )
 
-# ? Scroll bar in text box
+# ! Scroll bar in text box
 
 text_scroll = ttk.Scrollbar(root, orient="vertical", command=text.yview)
 # text_scroll.grid(row=0, column=1, sticky="ns")
@@ -72,6 +73,37 @@ check = ttk.Checkbutton(
     onvalue="On",
     offvalue="Off"
 )
-check.pack()
+# check.pack()
+
+# ! Radio button
+
+storage = tk.StringVar()
+
+option1 = ttk.Radiobutton(root, text="Option1", variable=storage, value="Option1")
+option2 = ttk.Radiobutton(root, text="Option2", variable=storage, value="Option2")
+option3 = ttk.Radiobutton(root, text="Option3", variable=storage, value="Option3")
+
+# option1.pack()
+# option2.pack()
+# option3.pack()
+
+# ! Combo Boxes
+
+selected = tk.StringVar()
+
+weekday = ttk.Combobox(root, textvariable=selected)
+weekday["value"] = ("Monday", "Tuesday", "Wednesday", "Thursday", "Friday")
+weekday.pack()
+
+def handleWeek(event):
+    print("Today is ", selected.get())
+    print("But we're gonna change it to friday.")
+    selected.set("Friday")
+    print(weekday.current())
+
+weekday.bind("<<ComboboxSelected>>", handleWeek)
+
+
+
 
 root.mainloop()
