@@ -93,7 +93,7 @@ selected = tk.StringVar()
 
 weekday = ttk.Combobox(root, textvariable=selected)
 weekday["value"] = ("Monday", "Tuesday", "Wednesday", "Thursday", "Friday")
-weekday.pack()
+# weekday.pack()
 
 def handleWeek(event):
     print("Today is ", selected.get())
@@ -104,6 +104,19 @@ def handleWeek(event):
 weekday.bind("<<ComboboxSelected>>", handleWeek)
 
 
+# ! ListBoxes
 
+prog_lang = ("C", "C++", "JavaScript", "Python", ".net")
+
+langs = tk.StringVar(value=prog_lang)
+langs_select = tk.Listbox(root, listvariable=langs, height=6, selectmode="extended")
+langs_select.pack()
+
+def handle_select(event):
+    selected_indice = langs_select.curselection()
+    for i in selected_indice:
+        print(langs_select.get(i))
+
+langs_select.bind("<<ListboxSelect>>", handle_select)
 
 root.mainloop()
