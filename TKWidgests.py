@@ -110,13 +110,28 @@ prog_lang = ("C", "C++", "JavaScript", "Python", ".net")
 
 langs = tk.StringVar(value=prog_lang)
 langs_select = tk.Listbox(root, listvariable=langs, height=6, selectmode="extended")
-langs_select.pack()
+# langs_select.pack()
 
 def handle_select(event):
     selected_indice = langs_select.curselection()
     for i in selected_indice:
         print(langs_select.get(i))
 
-langs_select.bind("<<ListboxSelect>>", handle_select)
+# langs_select.bind("<<ListboxSelect>>", handle_select)
+
+# ! SpinBox
+
+inital = tk.IntVar(value=20)
+spinBox = ttk.Spinbox(root, from_=0, to=30, textvariable=inital, wrap=False)
+# spinBox.pack()
+
+# ! Scale
+def handleScale(event):
+    print(scale.get())
+
+
+scale = ttk.Scale(root, orient="horizontal", from_=0, to=10, command=handleScale)
+scale.pack(fill="x")
+
 
 root.mainloop()
