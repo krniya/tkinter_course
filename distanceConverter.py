@@ -14,13 +14,16 @@ root.columnconfigure(0, weight=1)
 main = ttk.Frame(root, padding=(30, 15))
 main.grid()
 
+# meter to feet conversion
+
 meters_values = tk.StringVar()
+feet_value = tk.StringVar()
 
 def calculate_feet(*args):
     try:
         meter = float(meters_values.get())
         feet = meter * 3.28084
-        print(f"{meter} meters equal to {feet:.3f} feet.")
+        feet_value.set(f"{feet:.3f}")
     except ValueError:
         pass
 
@@ -29,7 +32,7 @@ def calculate_feet(*args):
 meter_label = ttk.Label(main, text="Meters:")
 meter_input = ttk.Entry(main, width=10, textvariable=meters_values)
 feet_label = ttk.Label(main, text="Feet:")
-feet_display = ttk.Label(main, text="Feet show here")
+feet_display = ttk.Label(main, text="Feet show here", textvariable=feet_value)
 calc_button = ttk.Button(main, text="Calculate", command=calculate_feet)
 
 meter_label.grid(column=0, row=0, sticky="W", padx=5, pady=5)
