@@ -15,10 +15,10 @@ class DistanceConverter(tk.Tk):
         container = ttk.Frame(self)
         container.grid(padx=60, pady=30, sticky="EW")
 
-        frame = MeterToFeet(container)
+        frame = FeetToMeter(container)
         frame.grid(row=0, column=0, sticky="NSEW")
-        self.bind("<Return>", frame.calculate_feet) 
-        self.bind("<KP_Enter>", frame.calculate_feet) 
+        self.bind("<Return>", frame.calculate) 
+        self.bind("<KP_Enter>", frame.calculate) 
 
 class MeterToFeet(ttk.Frame):
     def __init__(self, container, **kwargs):
@@ -42,11 +42,42 @@ class MeterToFeet(ttk.Frame):
         for child in self.winfo_children():
             child.grid_configure(padx=15, pady=15)
 
-    def calculate_feet(self, *args):
+    def calculate(self, *args):
         try:
             meters = float(self.meters_values.get())
             feet = meters * 3.28084
             self.feet_value.set(f"{feet:.3f}")
+        except ValueError:
+            pass
+
+class FeetToMeter(ttk.Frame):
+    def __init__(self, container, **kwargs):
+        super().__init__(container, **kwargs)
+        self.meters_values = tk.StringVar()
+        self.feet_value = tk.StringVar()
+        feet_label = ttk.Label(self, text="Feets:")
+        feet_input = ttk.Entry(self, width=10, textvariable=self.feet_value, font=("Arial", 15))
+        meter_label = ttk.Label(self, text="Meter:")
+        meter_display = ttk.Label(self, text="meter show here", textvariable=self.meters_values)
+        calc_button = ttk.Button(self, text="Calculate", command=self.calculate)
+
+
+        feet_label.grid(column=0, row=0, sticky="W")
+        feet_input.grid(column=1, row=0, sticky="EW")
+        feet_input.focus()
+        meter_label.grid(column=0, row=1, sticky="W")
+        meter_display.grid(column=1, row=1, sticky="EW")
+        
+        calc_button.grid(column=0, row=2, columnspan=2, sticky="EW")
+        # Updating padding
+        for child in self.winfo_children():
+            child.grid_configure(padx=15, pady=15)
+
+    def calculate(self, *args):
+        try:
+            feet = float(self.feet_value.get())
+            meter = feet / 3.28084
+            self.meters_values.set(f"{meter:.3f}")
         except ValueError:
             pass
 
