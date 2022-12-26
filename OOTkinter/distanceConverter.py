@@ -24,9 +24,13 @@ class DistanceConverter(tk.Tk):
 
         self.frames[FeetToMeter] = feetToMeterFrame
         self.frames[MeterToFeet] = meterToFeetFrame
+
+        self.show_frame(MeterToFeet)
         
     def show_frame(self, container):
         frame = self.frames[container]
+        self.bind("<Return>", frame.calculate)
+        self.bind("<KP_Enter>", frame.calculate)
         frame.tkraise()
 
 
